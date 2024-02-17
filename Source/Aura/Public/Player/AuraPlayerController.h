@@ -19,6 +19,8 @@ public:
 
 	AAuraPlayerController();
 
+	virtual void PlayerTick(float DeltasTime) override;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -34,5 +36,7 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 
 	void Move(const FInputActionValue& InputActionValue);
+
+	void CursorTrace();
 
 };

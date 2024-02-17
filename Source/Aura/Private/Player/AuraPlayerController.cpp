@@ -8,6 +8,25 @@ AAuraPlayerController::AAuraPlayerController()
 	bReplicates = true;
 }
 
+void AAuraPlayerController::PlayerTick(float DeltasTime)
+{
+
+	Super::PlayerTick(DeltasTime);
+
+	CursorTrace();
+
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) return;
+
+
+}
+
 
 void AAuraPlayerController::BeginPlay()
 {
@@ -56,6 +75,8 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	if (APawn* ControlledPawn = GetPawn<APawn>())
 	{
 		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
-		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.X);
+		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 	}
 }
+
+
