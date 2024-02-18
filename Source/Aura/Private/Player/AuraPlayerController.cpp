@@ -2,6 +2,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -23,6 +24,61 @@ void AAuraPlayerController::CursorTrace()
 	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+
+	/*
+	* Line trace from cursor. There are several scenarios:
+	*  A. LastActor is null && ThisActor is null
+	*		- Do nothing
+	*	B. LastActor is null && ThisActor is valid
+	*		- Highlight ThisActor
+	*	C. LastActor is valid && ThisActor is null
+	*		- UnHighlight LastActor
+	*	D. Both actors are valid, but LastActor != ThisActor
+	*		- UnHighlight LastActor, and Highlight ThisActor
+	*	E. Both actors are valid, and are the same actor
+	*		- Do nothing
+	*/
+
+	if (LastActor == nullptr)
+	{
+		if (ThisActor != nullptr)
+		{
+
+			//Case B
+			ThisActor->HighlightActor();
+
+		}
+		else
+		{
+			//Case A
+
+
+		}
+	}
+	else //LastActor Is Valid
+	{
+		if (ThisActor == nullptr)
+		{
+			//Case C
+			LastActor->UnHighlighsActor();
+		}
+		else //both actors are valid
+		{
+			if (LastActor != ThisActor)
+			{
+				//Case D
+				LastActor->UnHighlighsActor();
+				ThisActor->HighlightActor();
+			}
+			else
+			{
+				//Case E
+			}
+		}
+	}
 
 
 }
