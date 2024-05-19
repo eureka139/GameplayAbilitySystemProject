@@ -27,10 +27,22 @@ public:
 	
 	/* Enemy Interface */
 
+
+	
+	/* Combat Interface */
+
+	virtual int32 GetPlayerLevel() override;
+
+	/* Combat Interface */
+	
+
 protected:
 
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="CharacterClassDefaults")
+	int32 Level = 1;
 
 };

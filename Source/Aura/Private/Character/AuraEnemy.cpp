@@ -37,6 +37,11 @@ void AAuraEnemy::UnHighlighsActor()
 
 }
 
+int32 AAuraEnemy::GetPlayerLevel()
+{
+	return Level;
+}
+
 void AAuraEnemy::BeginPlay()
 {
 
